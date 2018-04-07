@@ -1,7 +1,16 @@
-all: index implementation
+all: entries
 
-index:
-	asciidoctor index.adoc
+BUILD ?= build
+SRC = $(wildcard *.adoc)
+OBJ = $(patsubst %.adoc, $(BUILD)/%.html, $(SRC))
 
-implementation:
-	asciidoctor implement.adoc
+$(BUILD): 
+	mkdir -p $(BUILD)
+
+entries: $(BUILD) $(OBJ)
+
+$(BUILD)/%.html: %.adoc
+	asciidoctor $< -o $@
+
+clean:
+	rm -rf $(BUILD)
