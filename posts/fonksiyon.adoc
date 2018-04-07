@@ -1,0 +1,27 @@
+= Fonksiyonlar
+Goksu Guvendiren <goksuguvendiren@gmail.com>
+:toc:
+:stem: latexmath
+
+
+Bu yazida {cpp} dilindeki fonksiyonlardan bahsedecegiz.
+
+// + Fonksiyon nedir
+// + Neden
+// + C++'da fonksyonlar
+
+== Fonksiyon nedir
+latexmath:[f(X) = 2X + 5]
+
+== Neden
+
+== {cpp}'da Fonksiyonlar
+
+Bir {cpp} fonksiyonu genel olarak asagidaki sekilde yazilir:
+
+----
+return_type function_name(parameters...)
+{
+    return 5;
+}
+----
