@@ -1,7 +1,7 @@
 ADOC_FLAGS= -a nofooter -n
 BUILD_DIR=docs
 
-all: posts glossary index
+all: $(BUILD) posts glossary index
 
 index:
 	asciidoctor index.adoc $(ADOC_FLAGS) -o ./$(BUILD_DIR)/index.html 

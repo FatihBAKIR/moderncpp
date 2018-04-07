@@ -4,11 +4,7 @@ Merhabalar.
 
 == Seriler
 
-=== {cpp}'a Giris
-+ <<posts/fonksiyon.adoc#title, Fonksiyonlar>>
+=== <<posts/intro/index.adoc#title, {cpp}'a Giris>>
+=== <<posts/intermediate/index.adoc#title, Orta seviye {cpp}>>
 
-=== Orta seviye {cpp}
-+ <<posts/template.adoc#title, Template'lar>>
-
-== Sozluk
-+ <<glossary/index.adoc#title, Sozluk>>
+== <<glossary/index.adoc#title, Sozluk>>

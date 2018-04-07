@@ -1,0 +1,8 @@
+= {cpp}'a Giris
+
+Bu serinin amaci, daha once programlama gecmisi olmayan kisilere {cpp} dili ve genel
+programlama konseptlerini ogretmek.
+
+== Icindekiler
+
++ <<fonksiyon.adoc#title, Fonksiyonlar>>

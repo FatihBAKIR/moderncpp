@@ -1,14 +1,11 @@
-all: entries
+SUBDIRS = intro intermediate
 
-BUILD ?= build
-SRC = $(wildcard *.adoc)
-OBJ = $(patsubst %.adoc, $(BUILD)/%.html, $(SRC))
+THIS_MAKEFILE = $(CURDIR)/../DirMakefile
 
-$(BUILD): 
-	mkdir -p $(BUILD)
+all: $(SUBDIRS)
 
-entries: $(BUILD) $(OBJ)
+$(SUBDIRS):
+	$(MAKE) -C $@ --file=$(THIS_MAKEFILE) BUILD="../$(BUILD)/$@" ADOC_FLAGS="$(ADOC_FLAGS)" all
 
-$(BUILD)/%.html: %.adoc
-	asciidoctor $< $(ADOC_FLAGS)  -o $@
+.PHONY: $(SUBDIRS)
 
