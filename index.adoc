@@ -7,5 +7,8 @@ Merhabalar.
 === {cpp}'a Giris
 + <<posts/fonksiyon.adoc#title, Fonksiyonlar>>
 
+=== Orta seviye {cpp}
++ <<posts/template.adoc#title, Template'lar>>
+
 == Sozluk
 + <<glossary/index.adoc#title, Sozluk>>
