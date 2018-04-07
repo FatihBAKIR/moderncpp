@@ -1,0 +1,80 @@
+= Lifetime
+Fatih BAKIR <bakir@ucsb.edu>
+:toc:
+
+Lifetime, yada object lifetime, {cpp}'da bir nesnenin gecerli oldugu araliga denir.
+
+{cpp} dilinde temel olarak 4 adet lifetime sinifi vardir ve basitce nesnelerin nerede _yasadigina_ baglidir:
+
+1. Static
+2. Thread local
+3. Automatic
+4. Dynamic
+
+== Static storage
+
+Her bir storage sinifinin farkli yasam sureleri vardir, ornegin _static storage_'a sahip bir nesnenin yasam suresi program bitene kadardir:
+----
+std::string hello = "merhaba dunya!";
+
+int main()
+{
+	std::cout << hello << '\n';
+}
+----
+
+Yukaridaki _global_ `hello` objesinin constructor'u main fonksyonundan once cagirilacak, destructor'u ise main bittikten sonra cagirilacak.
+
+Static storage'a sahip nesneler global nesneler veya fonksyonlara ait _static_ nesnelerdir:
+
+----
+int global_object = 5;
+
+int foo()
+{
+	static int value = 42;
+	return value;
+}
+----
+
+Ustteki ornekteki `value` ve `global_object` nesnelerinin ikisi de _static_ storage'a sahiptir. Aralarindaki fark ise ne noktada _initialize_ edildikleridir. Global nesneler main fonksyonu cagirilmadan once construct ediliyorken, fonksyon static nesneler o fonksyon ilk cagirildiginda construct edilir ve dolayisiyla o fonksyon hic cagirilmazsa, constructor ve dolayisiyla destructor'lari da asla cagirilmaz:
+
+----
+int main(int argc, char** argv)
+{
+    if (argc > 1) foo();
+}
+----
+
+Ornegin, yukaridaki program tek bir arguman ile cagirilirsa, `value` objesi asla hayata baslamayacak.
+
+Static storage'a ait nesneler dogrudan derlenen kutuphane yada uygulama icinde _static_ memory'ye sahiptir. Dolayisiyla asla initialize edilmese bile, static storage'a sahip butun objeler en azindan virtual memory'de yer kaplar.
+
+== Thread local storage
+
+Thread local storage pek cok acidan static storage'a benzer, hatta, static storage'i main thread'e ait thread local degiskenler gibi dusunebilirsiniz.
+
+Isminden de anlasilacagi gibi, thread local nesneler global yada fonkyon statik nesneler gibi gorunseler de, her thread icin ayri ayri olusturulurlar. Bu storage'a sahip nesneler threadler arasindaki race conditionlari azaltmakta buyuk fayda saglarlar.
+
+Static storage'a ait nesnelerden farkli olarak, main thread'e ait olmayan bu objelerin kullanacagi memory dinamik olarak alinir. Thread local objeler main thread icin de ulasilabilirdir fakat normal static storage'a sahip objeler gibi davranirlar.
+
+Bir not olarak, genellikle `new` yada `malloc` kullanmak yerine threading kutuphanesinin sagladigi thread local desteginden yararlanirlar.
+
+== Automatic storage
+
+Automatic storage, fonksyonlarin icindeki lokal degiskenlerin sahip oldugu storage tipidir. Bu nesnelerin yasamlari cevrelerindeki scope'la baslar, ve scope kapandiginda biter:
+
+----
+void foo()
+{
+	std::string foo; // foo'nun omru baslar
+
+	for (int i = 0; i < 5; ++i)
+	{
+		std::vector<int> vs; // vs'in omru baslar
+		// vs'i kullan
+	} // <- vs'in omru biter
+} // foo'nun omru biter
+----
+
+Yukaridaki ornekte `foo` fonksyonun butun govdesinde hayatta iken, `vs` her dongude olusturulup yok edilir.

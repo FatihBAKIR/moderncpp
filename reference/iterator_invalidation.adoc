@@ -1,0 +1,4 @@
+= Iterator invalidation
+Fatih BAKIR <bakir@ucsb.edu>
+
+Iterator gecersizleme, omru bitmemis bir iterator'un gosterdigi nesnenin omrunun bitmesine denir.

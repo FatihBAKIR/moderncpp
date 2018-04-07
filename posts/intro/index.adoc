@@ -5,4 +5,11 @@ programlama konseptlerini ogretmek.
 
 == Icindekiler
 
-+ <<fonksiyon.adoc#title, Fonksiyonlar>>
+1. Basit veri tipleri
+2. Akis kontrolu
+3. Donguler
+4. <<fonksiyon.adoc#title, Fonksiyonlar>>
+5. `std::string`
+6. `std::vector`
+7. `std::find`/`std::count`
+8.

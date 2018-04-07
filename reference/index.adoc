@@ -1,0 +1,8 @@
+= Referans
+Modern C++
+
+Referans bolumu, {cpp} ve genel programlama konseptleriyle ilgili spesifik bilgiler iceren yazilardan olusur:
+
+- <<implement.adoc#title, Implementation>>
+- <<lifetime.adoc#title, Object Lifetime>>
+- <<iterator_invalidation.adoc#title, Iterator Invalidation>>

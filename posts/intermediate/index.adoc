@@ -3,4 +3,5 @@
 
 == Icindekiler
 
-+ <<template.adoc#title, Template'lar>>
+1. Class hiyerarsileri
+2. <<template.adoc#title, Template'lar>>

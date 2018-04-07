@@ -7,4 +7,4 @@ Merhabalar.
 === <<posts/intro/index.adoc#title, {cpp}'a Giris>>
 === <<posts/intermediate/index.adoc#title, Orta seviye {cpp}>>
 
-== <<glossary/index.adoc#title, Sozluk>>
+== <<reference/index.adoc#title, Referans>>
