@@ -1,0 +1,33 @@
+= Modern {cpp}
+Modern {cpp}
+
+{cpp} yaklasik 40 yillik bir dil. 40 yil once yazilan {cpp} koduyla bugunkunun alakasiz oldugu asikar. Dile eklenen yeni ozellikler, paradigm degisimleri gibi seyler, ayni isi yapsa da oncekine gore daha ustun programlar yazabilmemizi sagliyor: daha okunabilir, verimli, maintainable gibi.
+
+{cpp} ile ilgili en iyi ve en kotu noktalardan biri geri uyumluluk. Cok daha ustun ozellikler dile eklense de, eski ozellikler on yillarca desteklenmeye devam ediyor.
+
+// Ornegin `std::vector<bool>` dedigimiz bir garabet var. Her tip icin bir sekilde davranan `vector` sablonu, `bool` tipiyle kullanildiginda bambaska davraniyor. Bugun bunun bir hata oldugunu {cpp} komitesi dahil herkes kabul ediyorken, bunun dilden komple kaldirilmasi mumkun degil. Zira 30 yildir yazilan pek cok program standart kutuphaneden bu davranisi bekliyor, dolayisiyla saglikli bir `vector<bool>`'a asla sahip olamayacagiz.
+
+Bu noktadaki sikinti su: yeni ozellik ve yaklasimlar eskilere gore acikca ustun olsa da, hala calisiyor olmasi ve eski ve yanlis kaynaklarin guncellenmemesi sebebiyle bu eski ve  yontem ve hatali algilar yaygin kalabiliyor.
+
+Konuyla alakali en guzel ornek memory yonetimi olabilir. Guncel {cpp} programlarinda manuel olarak memory yonetimi yapmiyoruz. Ornegin, asagidaki kod dinamik olarak objeler olusturup bunlari kullansa da memory allocation ve deallocation yapmamamiza ragmen herhangi bir leak olusmuyor:
+
+----
+void foo()
+{
+	std::vector<std::string> strings;
+
+	for (int i = 0; i < 100; ++i)
+	{
+		strings.push_back(std::to_string(i));
+	}
+
+	for (int i = 0; i < strings.size(); ++i)
+	{
+		bar(strings[i]);
+	}
+}
+----
+
+Onemli bir nokta, bu ornekte C++11'e ait hic bir yeniligi kullanmamamiz:
+
+> __C++11 ve sonrasi ozellikleri kullanmayan {cpp} programlari da pek ala modern {cpp} olabilir!__

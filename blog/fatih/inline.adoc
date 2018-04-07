@@ -1,0 +1,108 @@
+= `inline`
+Fatih BAKIR <bakir@ucsb.edu>
+
+[abstract]
+Fonksyonları inline işaretlemek düşündüğünüz şeyi yapmıyor
+
+{cpp} epey eski bir dil, aşağı yukarı 33 yıllık evrim ve gelişimi 
+sürecinde pek çok yeni özellik kazanıp, pek çoğunu kaybetti ve pek
+çok özelliğinin anlamını değiştirdi. Buna en önemli örneklerden biri
+`auto` keywordü. {cpp}11a kadar, bir objenin otomatik storage'a
+sahip olmasını bildirirken, {cpp}11 ile 
+beraber artık bir objenin tipini, nesneyi oluşturacak ifadeden 
+çıkarmasını sağlar hale geldi.
+> Otomatik storage'a sahip bir nesne, içinde bulunduğu scope bitene 
+kadar hayatta tutulur. Bildiğiniz local değişkenler.
+
+`auto` tamamen anlamını değiştirmişken, bazı özellikler ise kısmen
+anlamını değiştiriyor. Bunlardan biri de `inline` keywordu. Aşağıdaki
+çok standart faktöryel fonksyonuna bakalım.
+
+----
+int factorial(int k)
+{
+    int accum = 1;
+    while (k > 0)
+    {
+        accum *= k--;
+    }
+    return accum;
+}
+
+int main()
+{
+    std::cout << factorial(6) << '\n';
+}
+---- 
+
+Bu programı derleyicinizle derleyip çalıştırdıktan sonra, temiz bir
+şekilde ekrana 720 bastığını göreceksiniz. Harika!
+
+Fakat, iyi biliyoruz ki fonksyon çağırmak masraflı bir iş. Argümanların verilmesi, return adresin stack'e koyulması derken bir ton iş yapmak gerekiyor. Dolayısıyla, derleyicimizin bu fonksyonu çağırmak yerine, içeriğini doğrudan `main`'in içine almasını istemek son derece mantıklı değil mi?
+
+Bir fonksyonu standart şekilde çağırmak yerine, çağıran bir başka fonksyonun içine gömme işlemine _inlining_ diyoruz. Tahminimiz doğru, inlining, bir programın performansını son derece iyileştirebilen güçlü bir özellik. 
+
+Peki bu özelliği {cpp} ile nasıl kullanabiliriz?
+
+1. fonksyonun tanımına `inline` yazarak!
+2. hiç bir şey yapmayarak
+
+Bu kadar salak bir soru sorduğuma göre, 1 demekten çekiniyor olabilirsiniz. Ve çok haklısınız. Bu noktada ayrımına varmanız gereken şey, inlining işleminin bir sihirli değnek olmadığıdır. Inlining, nihayetinde bir fonksyonun gövdesini başka bir fonksyona kopyalayıp yapıştırmaktan ibaret. Eğer derleyicilerimiz bütün fonksyonları inline edip dursaydı, ufacık kodlarımız gigabyte'larca programlara dönüşürdü (_Programın büyümesinin neden kötü olduğunu okuyucuya bırakıyorum_). Dolayısıyla, derleyiciler bir fonksyon çağrısını inline etme kararını verirken çeşitli metriklere bakar ve sonuçta programın büyümesi, performans artışına değecekse, çağrıyı inline'lar.
+
+Dolayısıyla, **günümüz derleyicilerinde, bir fonksyonu `inline` olarak işaretlemek, fonksyonun gerçekten inline edilip edilmeyeceği kararı üzerinde hiç bir rol oynamaz**. 25 yıl önceki bir derleyici eminim ki bu kararda fonksyonun inline edilip edilmeyeceğine bakıyordur, fakat kabul edelim ki günümüzde derleyiciler bizden daha zeki ve bu tarz kararları kendi başlarına alabiliyorlar.
+
+---
+
+**_E peki bu inline keywordü hiç mi bir işe yaramıyor?_** dediğinizi duyar gibiyim. Hayır, aksine çok kullanışlı bir özelliğe sahipler!
+
+Bildiğiniz üzere, {cpp} programlarında, bir fonksyonu sadece bir dosyada tanımlayabilirsiniz. Örneğin, 2 farklı dosyada aynı imzaya (isim ve argümanlara) sahip 2 fonksyon tanımlayamazsınız (içleri birebir aynı olsa bile!):
+
+----
+// a.cpp
+int square(int a) 
+{ return a * a; }
+
+// b.cpp
+int square(int a) 
+{ return a * a; }
+----
+
+Derleyiciniz için hava hoş, iki fonksyonu da derleyip, ayrı object file'ların içine koyar. Fakat, linker'ınız, aynı imzaya sahip 2 fonksyonu bulacağı için, ağzınızın tadını biraz kaçıracaktır.
+
+Tabi ki, _iyi de neden aynı işi yapan fonksyonu 2 kere ayrı yerlerde tanımlayayım ki?_ diyor olabilirsiniz. Genelde zaten doğrudan ayrı dosyalarda tanımlamıyorsunuz: fonksyonu bir header'da tanımlıyorsunuz!
+
+----
+// a.h
+int square(int a) 
+{ return a * a; }
+
+// a.cpp
+#include <a.h>
+
+// b.cpp
+#include <a.h>
+----
+
+Bu noktada `inline` hayatımızı kurtarıyor. Eğer ki, `square` fonksyonunu inline olarak işaretlerseniz, kodunuz tıkır tıkır derlenip linklenecektir. Class tanımı içinde implement ettiğiniz fonksyonların link hatası vermemesinin sebebi, o fonksyonların aslında inline tanımlanıyor olmasıdır.
+
+----
+// MyClass.h
+struct MyClass
+{
+  void fun() { ... }
+  // iki tanım da eş
+  inline void fun() { ... }
+};
+----
+
+Sonuç olarak, bir fonksyonun inline olarak işaretlenmiş olmasının, o fonksyon ile ilgili hiç bir inlinin kararını belirlemediğini bilin, ve sadece bir fonksyonu headerda tanımlamak istediğiniz zaman kullanın.
+
+Son bir ufak not olarak, inline fonksyonlar kullandığınızda [One Definition Rule](http://en.cppreference.com/w/cpp/language/definition) ihlali yapmadığınızdan emin olun!
+
+İyi kodlamalar
+
+---
+
+_Not:_ eğer ki ikna olmadıysanız, yada birini ikna edemiyorsanız, ilk örneğin [assembly çıktısına](https://godbolt.org/g/ng2YVn) bakarak ispatlayabilirsiniz. Optimizasyonları açtıktan sonra, inline işaretini kaldırsanız da fonksyonun inline'lanacağını görebilirsiniz.
+
+_Not 2:_ eğer derleyicinizi bir fonksyonu inline etmeye zorlamak isterseniz, derleyici spesifik şeyler kullanmanız gerekiyor. Örneğin, gcc ve clang için fonksyonun başına `__attribute__((always_inline))` yazabilirsiniz. msvc (visual studio) için `__forceinline` yazabilirsiniz fakat bunun da garantisi olmadığını bilin.
