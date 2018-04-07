@@ -1,0 +1,4 @@
+= Modern C++
+Fatih BAKIR <bakir@ucsb.edu>, Goksu Guvendiren <goksuguvendiren@gmail.com>
+
+Merhaba
