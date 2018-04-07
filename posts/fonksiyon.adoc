@@ -3,25 +3,38 @@ Goksu Guvendiren <goksuguvendiren@gmail.com>
 :toc:
 :stem: latexmath
 
-
-Bu yazida {cpp} dilindeki fonksiyonlardan bahsedecegiz.
-
-// + Fonksiyon nedir
-// + Neden
-// + C++'da fonksyonlar
-
 == Fonksiyon nedir
-latexmath:[f(X) = 2X + 5]
+
+// matematiksel
+
+[[fonksyon1]]
+[stem]
+++++
+f(x) = 2x + 5
+++++
 
 == Neden
 
+// reuse
+// abstraction
+// api
+
 == {cpp}'da Fonksiyonlar
+
+Onceki yazilarda programlarimizi `main` adli bir _fonksiyon_ icerisinde yazdik. Main fonksyonu derleyicimizin gerekli islemleri yaptiktan sonra, programimizi baslatmak icin kullandigi ozel bir fonksyondur. Fakat yazabildigimiz tek fonksyon `main` degil, yukarda bahsettigimiz gibi amaclarla kendi fonksyonlarimizi yaziyoruz. Hatta basit bir bakis acisiyla {cpp} yazarken, yaptigimiz tek sey fonksyonlar yazmak. Basit bir ornek olarak yukaridaki matematiksel <<fonksyon1,fonksyonlardan birini>> {cpp}'da implement edelim: 
+
+----
+int f(int x)
+{
+    return 2 * x + 5;
+}
+----
 
 Bir {cpp} fonksiyonu genel olarak asagidaki sekilde yazilir:
 
 ----
 return_type function_name(parameters...)
 {
-    return 5;
+    return expression;
 }
 ----
