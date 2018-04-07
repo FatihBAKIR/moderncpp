@@ -1,0 +1,11 @@
+= Modern C++
+
+Merhabalar.
+
+== Seriler
+
+=== {cpp}'a Giris
++ <<posts/fonksiyon.adoc#title, Fonksiyonlar>>
+
+== Sozluk
++ <<glossary/index.adoc#title, Sozluk>>

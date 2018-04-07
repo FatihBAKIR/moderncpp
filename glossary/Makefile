@@ -10,7 +10,5 @@ $(BUILD):
 entries: $(BUILD) $(OBJ)
 
 $(BUILD)/%.html: %.adoc
-	asciidoctor $< -o $@
+	asciidoctor $< $(ADOC_FLAGS)  -o $@
 
-clean:
-	rm -rf $(BUILD)
