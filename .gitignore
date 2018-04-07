@@ -2,4 +2,5 @@ build/
 *.html
 *.pdf
 **/.idea
+*.adoc.swp
 
