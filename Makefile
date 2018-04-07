@@ -1,4 +1,4 @@
-ADOC_FLAGS= -a nofooter -n
+ADOC_FLAGS= -a nofooter -n -a linkcss
 BUILD_DIR=docs
 
 all: $(BUILD) posts glossary index
