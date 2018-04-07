@@ -1,0 +1,20 @@
+= Implementation
+:stem: latexmath
+
+Implementation, bir fikir veya konseptin uygulamaya gecirilmesidir. Bizim baglamimizda genellikle bir fikrin koda aktarilmasi anlaminda kullanilir.
+
+== Ornek
+
+[stem]
+++++
+f(x) = 2x + 5
+++++
+
+Yukardaki fonksyonun {cpp}'daki _implementation_'i asagidaki gibidir:
+
+----
+int f(int x) 
+{
+    return 2 * x + 5;
+}
+----
