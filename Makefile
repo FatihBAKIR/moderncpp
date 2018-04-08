@@ -1,12 +1,12 @@
 ADOC_FLAGS= -a nofooter -n -a linkcss
 BUILD_DIR=docs
 
-all: $(BUILD) posts reference index moderncpp blog
+all: $(BUILD) posts reference blog $(BUILD_DIR)/index.html $(BUILD_DIR)/moderncpp.html
 
-index:
+$(BUILD_DIR)/index.html: index.adoc
 	asciidoctor index.adoc $(ADOC_FLAGS) -o ./$(BUILD_DIR)/index.html 
 
-moderncpp:
+$(BUILD_DIR)/moderncpp.html: moderncpp.adoc
 	asciidoctor moderncpp.adoc $(ADOC_FLAGS) -o ./$(BUILD_DIR)/moderncpp.html 
 
 posts:

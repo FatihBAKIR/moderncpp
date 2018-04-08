@@ -1,8 +1,9 @@
 = Modern C++
 
-Merhabalar.
+[abstract]
+Modern {cpp}, dilin guncel ozelliklerini kullanarak verimli, anlasilir ve guvenli programlar yazmaya onem veren bir programlama bicimidir. <<moderncpp.adoc#title, Daha fazla>>
 
-<<moderncpp.adoc#title, Modern C++ derken?>>
+---
 
 == Seriler
 

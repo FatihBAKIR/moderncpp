@@ -1,5 +1,4 @@
 = Modern {cpp}
-Modern {cpp}
 
 {cpp} yaklasik 40 yillik bir dil. 40 yil once yazilan {cpp} koduyla bugunkunun alakasiz oldugu asikar. Dile eklenen yeni ozellikler, paradigm degisimleri gibi seyler, ayni isi yapsa da oncekine gore daha ustun programlar yazabilmemizi sagliyor: daha okunabilir, verimli, maintainable gibi.
 

@@ -13,7 +13,7 @@ Lifetime, yada object lifetime, {cpp}'da bir nesnenin gecerli oldugu araliga den
 
 == Static storage
 
-Her bir storage sinifinin farkli yasam sureleri vardir, ornegin _static storage_'a sahip bir nesnenin yasam suresi program bitene kadardir:
+Her bir storage sinifinin farkli yasam sureleri vardir, ornegin _static storage_'a sahip bir nesnenin yasam suresi construct edildikten program bitene kadardir:
 ----
 std::string hello = "merhaba dunya!";
 
@@ -50,7 +50,20 @@ Ornegin, yukaridaki program tek bir arguman ile cagirilirsa, `value` objesi asla
 
 Static storage'a ait nesneler dogrudan derlenen kutuphane yada uygulama icinde _static_ memory'ye sahiptir. Dolayisiyla asla initialize edilmese bile, static storage'a sahip butun objeler en azindan virtual memory'de yer kaplar.
 
+Onemli bir nokta, global degiskenlerin olusturulma ve yok edilme siralariyla ilgili bir garanti bulunmamasidir. Dolayisiyla, global nesnelerin constructor ve destructor'larinda diger global nesnelere ulasmak genellikle tehlikeli bir davranistir.
+
 == Thread local storage
+
+----
+thread_local std::string val = "her thread icin farkli!";
+
+void foo()
+{
+	thread_local std::string func_thread_local = "her thread icin yine farkli";
+	//...
+}
+----
+
 
 Thread local storage pek cok acidan static storage'a benzer, hatta, static storage'i main thread'e ait thread local degiskenler gibi dusunebilirsiniz.
 
@@ -59,6 +72,8 @@ Isminden de anlasilacagi gibi, thread local nesneler global yada fonkyon statik 
 Static storage'a ait nesnelerden farkli olarak, main thread'e ait olmayan bu objelerin kullanacagi memory dinamik olarak alinir. Thread local objeler main thread icin de ulasilabilirdir fakat normal static storage'a sahip objeler gibi davranirlar.
 
 Bir not olarak, genellikle `new` yada `malloc` kullanmak yerine threading kutuphanesinin sagladigi thread local desteginden yararlanirlar.
+
+Thread local storage'a sahip butun nesneler, o nesnelere ait thread'in giris fonksyonu donus yada exception sebebiyle ciktigi zaman destruct edilir ve bu nesnelerle ilgili butun iterator ve pointer'lar _gecersizlenir_.
 
 == Automatic storage
 
@@ -78,3 +93,36 @@ void foo()
 ----
 
 Yukaridaki ornekte `foo` fonksyonun butun govdesinde hayatta iken, `vs` her dongude olusturulup yok edilir.
+
+Genel olarak _stack variable_ olarak adlandirilsalar da {cpp} bu degiskenlerin tam olarak nasil tutulacagi ile ilgili bir garanti vermez. Garantili olan, nesnelerin akis sirasinda yukaridan asagi olusturulup, cikista olusturulma sirasina ters yok edilecegidir:
+
+----
+void foo()
+{
+	std::string x;
+	std::vector<int> ints;
+
+	ints.push_back(5);
+	float y = 3.5f;
+}
+----
+
+Yukaridaki ornekte sirayla `x` ve `ints` construct edilecek, `push_back` operasyonundan sonra da ``y``'ye 3.5 degeri atanacak. `float` tipindeki nesnelerin destructor'u olmadigi icin, fonksyon cikisinda once `ints` sonra da `x` yok edilecek.
+
+Bir fonksyonun icindeki tum nesneler, fonksyondan donus veya bir exception sebebiyle cikildiginda yok edilir ve butun bu nesnelerle ilgili iterator ve pointer'lar _gecersizlenir_.
+
+`auto` keyword'u eskiden bir local degiskenin automatic storage'a sahip oldugunu belirtmek icin kullaniliyordu. Sacma geliyorsa aramiza hosgeldiniz! Neyse ki gunumuzde cok daha anlamli bir ise yariyor.
+
+Bir type icerisindeki uye nesneler de automatic storage semantiklerine sahiptir. Kisaca nesneleri, uye nesnelerini kapsayan bir _scope_ olarak dusunebilirsiniz. Nesneye ait scope, nesne construct edildiginde baslar ve destruct edildiginde biter.
+
+== Dynamic storage
+
+Ilk 3 storage tipinin tamaminin omru basladiktan sonra yok edildigi, dil tarafindan garantilenen _well defined_ noktalar bulunuyor: automatic'ler icin scope bitisi, thread local ve static'ler icin de giris noktalarindan donus.
+
+Dynamic storage icinse bu sekilde herhangi bir garanti bulunmuyor. Bu nesnelerin omru, memory allocation'dan sonra nesnenin construct edilmesiyle baslayip, tamamen dinamik sekilde, olustugu scope'tan bagimsiz olarak bitiyor.
+
+Programciya nesne lifetime'i ile ilgili soz hakki veren tek kategori dynamic storage. Fakat bu soz hakki ile beraber, buyuk bir sorumluluk da geliyor: kaynak yonetimi. Ornegin automatic nesnelerin destructor'u otomatik cagirilip, atanan memory geri verilirken, dynamic nesneler icin bu gecerli degildir ve bunun nasil yapilacagi programciya birakilmistir. Allocate edilen memory'nin geri verilmemesi, nesnelerin yok edilmemesi yada daha kotusu bunlarin birden cok yapilmasi gibi problemler, dynamic storage kullanimindan olabildigince kacinmaya yonlendirmektedir.
+
+Dynamic storage'a ait nesneler genellikle `new` operatoru ile alinsa da, verimlilik amaciyla ozel memory allocator'leri kullanarak da olusturulabilir. `malloc`/`free` sadece raw memory ile calistigi ve constructor/destruct cagirmadigi icin cok daha tehlikelidir ve modern {cpp} kodunda asla kullanilmamalidir. Raw memory ihtiyaciniz varsa, `malloc(N)` yerine, `new char[N]` kullanabilirsiniz.
+
+Tabi baska bir not olarak modern {cpp} kodunda genel olarak `new`/`delete` ile manuel olarak ugrasmayip RAII adi verilen bir teknik kullaniriz. Kisaca bu pattern dynamic lifetime'a sahip nesnelerin yonetimini automatic lifetime'a sahip nesnelere baglayarak, kaynaklarin otomatik olarak iade edilmesini saglar. Daha detayli bilgi icin mutlaka <<raii.adoc#title, RAII sayfasi>>ni ziyaret edin!

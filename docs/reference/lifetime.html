@@ -23,6 +23,7 @@
 <li><a href="#_static_storage">1. Static storage</a></li>
 <li><a href="#_thread_local_storage">2. Thread local storage</a></li>
 <li><a href="#_automatic_storage">3. Automatic storage</a></li>
+<li><a href="#_dynamic_storage">4. Dynamic storage</a></li>
 </ul>
 </div>
 </div>
@@ -57,7 +58,7 @@
 <h2 id="_static_storage">1. Static storage</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Her bir storage sinifinin farkli yasam sureleri vardir, ornegin <em>static storage</em>'a sahip bir nesnenin yasam suresi program bitene kadardir:</p>
+<p>Her bir storage sinifinin farkli yasam sureleri vardir, ornegin <em>static storage</em>'a sahip bir nesnenin yasam suresi construct edildikten program bitene kadardir:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -103,11 +104,25 @@ int foo()
 <div class="paragraph">
 <p>Static storage&#8217;a ait nesneler dogrudan derlenen kutuphane yada uygulama icinde <em>static</em> memory&#8217;ye sahiptir. Dolayisiyla asla initialize edilmese bile, static storage&#8217;a sahip butun objeler en azindan virtual memory&#8217;de yer kaplar.</p>
 </div>
+<div class="paragraph">
+<p>Onemli bir nokta, global degiskenlerin olusturulma ve yok edilme siralariyla ilgili bir garanti bulunmamasidir. Dolayisiyla, global nesnelerin constructor ve destructor&#8217;larinda diger global nesnelere ulasmak genellikle tehlikeli bir davranistir.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_thread_local_storage">2. Thread local storage</h2>
 <div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>thread_local std::string val = "her thread icin farkli!";
+
+void foo()
+{
+	thread_local std::string func_thread_local = "her thread icin yine farkli";
+	//...
+}</pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Thread local storage pek cok acidan static storage&#8217;a benzer, hatta, static storage&#8217;i main thread&#8217;e ait thread local degiskenler gibi dusunebilirsiniz.</p>
 </div>
@@ -119,6 +134,9 @@ int foo()
 </div>
 <div class="paragraph">
 <p>Bir not olarak, genellikle <code>new</code> yada <code>malloc</code> kullanmak yerine threading kutuphanesinin sagladigi thread local desteginden yararlanirlar.</p>
+</div>
+<div class="paragraph">
+<p>Thread local storage&#8217;a sahip butun nesneler, o nesnelere ait thread&#8217;in giris fonksyonu donus yada exception sebebiyle ciktigi zaman destruct edilir ve bu nesnelerle ilgili butun iterator ve pointer&#8217;lar <em>gecersizlenir</em>.</p>
 </div>
 </div>
 </div>
@@ -144,6 +162,53 @@ int foo()
 </div>
 <div class="paragraph">
 <p>Yukaridaki ornekte <code>foo</code> fonksyonun butun govdesinde hayatta iken, <code>vs</code> her dongude olusturulup yok edilir.</p>
+</div>
+<div class="paragraph">
+<p>Genel olarak <em>stack variable</em> olarak adlandirilsalar da C++ bu degiskenlerin tam olarak nasil tutulacagi ile ilgili bir garanti vermez. Garantili olan, nesnelerin akis sirasinda yukaridan asagi olusturulup, cikista olusturulma sirasina ters yok edilecegidir:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>void foo()
+{
+	std::string x;
+	std::vector&lt;int&gt; ints;
+
+	ints.push_back(5);
+	float y = 3.5f;
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Yukaridaki ornekte sirayla <code>x</code> ve <code>ints</code> construct edilecek, <code>push_back</code> operasyonundan sonra da <code>y</code>'ye 3.5 degeri atanacak. <code>float</code> tipindeki nesnelerin destructor&#8217;u olmadigi icin, fonksyon cikisinda once <code>ints</code> sonra da <code>x</code> yok edilecek.</p>
+</div>
+<div class="paragraph">
+<p>Bir fonksyonun icindeki tum nesneler, fonksyondan donus veya bir exception sebebiyle cikildiginda yok edilir ve butun bu nesnelerle ilgili iterator ve pointer&#8217;lar <em>gecersizlenir</em>.</p>
+</div>
+<div class="paragraph">
+<p><code>auto</code> keyword&#8217;u eskiden bir local degiskenin automatic storage&#8217;a sahip oldugunu belirtmek icin kullaniliyordu. Sacma geliyorsa aramiza hosgeldiniz! Neyse ki gunumuzde cok daha anlamli bir ise yariyor.</p>
+</div>
+<div class="paragraph">
+<p>Bir type icerisindeki uye nesneler de automatic storage semantiklerine sahiptir. Kisaca nesneleri, uye nesnelerini kapsayan bir <em>scope</em> olarak dusunebilirsiniz. Nesneye ait scope, nesne construct edildiginde baslar ve destruct edildiginde biter.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dynamic_storage">4. Dynamic storage</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Ilk 3 storage tipinin tamaminin omru basladiktan sonra yok edildigi, dil tarafindan garantilenen <em>well defined</em> noktalar bulunuyor: automatic&#8217;ler icin scope bitisi, thread local ve static&#8217;ler icin de giris noktalarindan donus.</p>
+</div>
+<div class="paragraph">
+<p>Dynamic storage icinse bu sekilde herhangi bir garanti bulunmuyor. Bu nesnelerin omru, memory allocation&#8217;dan sonra nesnenin construct edilmesiyle baslayip, tamamen dinamik sekilde, olustugu scope&#8217;tan bagimsiz olarak bitiyor.</p>
+</div>
+<div class="paragraph">
+<p>Programciya nesne lifetime&#8217;i ile ilgili soz hakki veren tek kategori dynamic storage. Fakat bu soz hakki ile beraber, buyuk bir sorumluluk da geliyor: kaynak yonetimi. Ornegin automatic nesnelerin destructor&#8217;u otomatik cagirilip, atanan memory geri verilirken, dynamic nesneler icin bu gecerli degildir ve bunun nasil yapilacagi programciya birakilmistir. Allocate edilen memory&#8217;nin geri verilmemesi, nesnelerin yok edilmemesi yada daha kotusu bunlarin birden cok yapilmasi gibi problemler, dynamic storage kullanimindan olabildigince kacinmaya yonlendirmektedir.</p>
+</div>
+<div class="paragraph">
+<p>Dynamic storage&#8217;a ait nesneler genellikle <code>new</code> operatoru ile alinsa da, verimlilik amaciyla ozel memory allocator&#8217;leri kullanarak da olusturulabilir. <code>malloc</code>/<code>free</code> sadece raw memory ile calistigi ve constructor/destruct cagirmadigi icin cok daha tehlikelidir ve modern C++ kodunda asla kullanilmamalidir. Raw memory ihtiyaciniz varsa, <code>malloc(N)</code> yerine, <code>new char[N]</code> kullanabilirsiniz.</p>
+</div>
+<div class="paragraph">
+<p>Tabi baska bir not olarak modern C++ kodunda genel olarak <code>new</code>/<code>delete</code> ile manuel olarak ugrasmayip RAII adi verilen bir teknik kullaniriz. Kisaca bu pattern dynamic lifetime&#8217;a sahip nesnelerin yonetimini automatic lifetime&#8217;a sahip nesnelere baglayarak, kaynaklarin otomatik olarak iade edilmesini saglar. Daha detayli bilgi icin mutlaka <a href="raii.html#title">RAII sayfasi</a>ni ziyaret edin!</p>
 </div>
 </div>
 </div>
