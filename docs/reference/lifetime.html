@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.6.1">
+<meta name="generator" content="Asciidoctor 1.5.6.2">
 <meta name="author" content="Fatih BAKIR">
 <title>Lifetime</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
@@ -208,7 +208,7 @@ void foo()
 <p>Dynamic storage&#8217;a ait nesneler genellikle <code>new</code> operatoru ile alinsa da, verimlilik amaciyla ozel memory allocator&#8217;leri kullanarak da olusturulabilir. <code>malloc</code>/<code>free</code> sadece raw memory ile calistigi ve constructor/destruct cagirmadigi icin cok daha tehlikelidir ve modern C++ kodunda asla kullanilmamalidir. Raw memory ihtiyaciniz varsa, <code>malloc(N)</code> yerine, <code>new char[N]</code> kullanabilirsiniz.</p>
 </div>
 <div class="paragraph">
-<p>Tabi baska bir not olarak modern C++ kodunda genel olarak <code>new</code>/<code>delete</code> ile manuel olarak ugrasmayip RAII adi verilen bir teknik kullaniriz. Kisaca bu pattern dynamic lifetime&#8217;a sahip nesnelerin yonetimini automatic lifetime&#8217;a sahip nesnelere baglayarak, kaynaklarin otomatik olarak iade edilmesini saglar. Daha detayli bilgi icin mutlaka <a href="raii.html#title">RAII sayfasi</a>ni ziyaret edin!</p>
+<p>Tabi baska bir not olarak modern C++ kodunda genel olarak <code>new</code>/<code>delete</code> ile manuel olarak ugrasmayip RAII adi verilen bir teknik kullaniriz. Kisaca bu pattern dynamic lifetime&#8217;a sahip nesnelerin yonetimini automatic lifetime&#8217;a sahip nesnelere baglayarak, kaynaklarin otomatik olarak iade edilmesini saglar. Daha detayli bilgi icin mutlaka <a href="raii.html">RAII sayfasi</a>ni ziyaret edin!</p>
 </div>
 </div>
 </div>

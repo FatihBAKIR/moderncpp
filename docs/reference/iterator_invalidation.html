@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.6.1">
+<meta name="generator" content="Asciidoctor 1.5.6.2">
 <meta name="author" content="Fatih BAKIR">
 <title>Iterator invalidation</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
@@ -20,7 +20,35 @@
 </div>
 <div id="content">
 <div class="paragraph">
-<p>Iterator gecersizleme, omru bitmemis bir iterator&#8217;un gosterdigi nesnenin omrunun bitmesine denir.</p>
+<p>Iterator gecersizleme, omru bitmemis bir iterator&#8217;un gosterdigi nesnenin omrunun bitmesine denir. Gecersizlenmis iteratorlere <em>dangling</em> iterator de denir.</p>
+</div>
+<div class="paragraph">
+<p>Pointer&#8217;lar icin de ayni durum gecerli olmakla <em>dangling pointer</em> belki de daha sik kullanilan bir terimdir.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>void foo()
+{
+	auto x = new int;
+	delete x;
+	// x bu noktada gecersiz
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Bu noktada onemli bir mevzu, C++'da iterator ve pointerlarin gosterdigi nesneyi <em>takip etmiyor</em> olusudur. Ustteki ornekte gecersizleme asikarken, daha gizli yollardan bu problemle karsilasabiliriz. Mesela <code>std::vector</code> gibi bitisik container tiplerinde eger alan onden <code>reserve</code> edilmemisse yeni bir eleman eklemek butun iteratorleri gecersizler:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>void foo()
+{
+	std::vector x{1, 2, 3}; // C++17 template type deduction
+
+	auto first = x.begin();
+	x.push_back(4);
+	// first bu noktada dangle etmekte
+}</pre>
+</div>
 </div>
 </div>
 </body>

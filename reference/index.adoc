@@ -3,8 +3,9 @@ Modern C++
 
 Referans bolumu, {cpp} ve genel programlama konseptleriyle ilgili spesifik bilgiler iceren yazilardan olusur:
 
-- <<implement.adoc#title, Implementation>>
-- <<lifetime.adoc#title, Object Lifetime>>
-- <<iterator_invalidation.adoc#title, Iterator Invalidation>>
-- <<inlining.adoc#title, Inlining>>
-- <<inline_keyword.adoc#title, `inline` keyword>>
+- <<implement.adoc#, Implementation>>
+- <<lifetime.adoc#, Object Lifetime>>
+- <<iterator_invalidation.adoc#, Iterator Invalidation>>
+- <<inlining.adoc#, Inlining>>
+- <<inline_keyword.adoc#, `inline` keyword>>
+- <<pimpl.adoc#, Pimpl>>

@@ -1,0 +1,3 @@
+= Pimpl Idiom
+Fatih BAKIR <bakir@ucsb.edu>
+

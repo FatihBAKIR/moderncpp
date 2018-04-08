@@ -1,4 +1,28 @@
 = Iterator invalidation
 Fatih BAKIR <bakir@ucsb.edu>
 
-Iterator gecersizleme, omru bitmemis bir iterator'un gosterdigi nesnenin omrunun bitmesine denir.
+Iterator gecersizleme, omru bitmemis bir iterator'un gosterdigi nesnenin omrunun bitmesine denir. Gecersizlenmis iteratorlere _dangling_ iterator de denir.
+
+Pointer'lar icin de ayni durum gecerli olmakla _dangling pointer_ belki de daha sik kullanilan bir terimdir.
+
+----
+void foo()
+{
+	auto x = new int;
+	delete x;
+	// x bu noktada gecersiz
+}
+----
+
+Bu noktada onemli bir mevzu, {cpp}'da iterator ve pointerlarin gosterdigi nesneyi _takip etmiyor_ olusudur. Ustteki ornekte gecersizleme asikarken, daha gizli yollardan bu problemle karsilasabiliriz. Mesela `std::vector` gibi bitisik container tiplerinde eger alan onden `reserve` edilmemisse yeni bir eleman eklemek butun iteratorleri gecersizler:
+
+----
+void foo()
+{
+	std::vector x{1, 2, 3}; // C++17 template type deduction
+
+	auto first = x.begin();
+	x.push_back(4);
+	// first bu noktada dangle etmekte
+}
+----

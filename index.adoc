@@ -1,17 +1,17 @@
 = Modern C++
 
 [abstract]
-Modern {cpp}, dilin guncel ozelliklerini kullanarak verimli, anlasilir ve guvenli programlar yazmaya onem veren bir programlama bicimidir. <<moderncpp.adoc#title, Daha fazla>>
+Modern {cpp}, dilin guncel ozelliklerini kullanarak verimli, anlasilir ve guvenli programlar yazmaya onem veren bir programlama bicimidir. <<moderncpp.adoc#, Daha fazla>>
 
 ---
 
 == Seriler
 
-=== <<posts/intro/index.adoc#title, {cpp}'a Giris>>
-=== <<posts/intermediate/index.adoc#title, Orta seviye {cpp}>>
+=== <<posts/intro/index.adoc#, {cpp}'a Giris>>
+=== <<posts/intermediate/index.adoc#, Orta seviye {cpp}>>
 
-== <<reference/index.adoc#title, Referans>>
+== <<reference/index.adoc#, Referans>>
 
 == Bloglar
 
-- <<blog/fatih/inline.adoc#title, `inline`>>
+- <<blog/fatih/inline.adoc#, `inline`>>

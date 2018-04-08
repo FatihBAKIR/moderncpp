@@ -4,4 +4,4 @@
 == Icindekiler
 
 1. Class hiyerarsileri
-2. <<template.adoc#title, Template'lar>>
+2. <<template.adoc#, Template'lar>>
