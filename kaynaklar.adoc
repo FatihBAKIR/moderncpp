@@ -1,0 +1,48 @@
+# {cpp} Kaynakları
+
+## Web
+
+- https://en.cppreference.com/w/ 
+Şu fonksyon napıyor, şu dil özelliği ne işe yarar, vs gibi referans tarzı soruların cevabı burada
+
+- https://isocpp.org/
+{cpp} ile ilgili resmi web sitesi burada, haber, etkinlik vs gibi şeyleri burdan takip etmek mümkün
+
+- https://www.reddit.com/r/cpp/
+Resmi gibi bir subreddit, güzel
+
+## Kitap
+
+Mutlaka okunmalı dediklerim kalın olarak yazılı, ne kadar bildiğinizi düşünüyorsanız da, mutlaka göz atmanızı tavsiye ediyorum.
+
+- *Tour of {cpp}*, 2. edition {cpp}17 falan ama ilki de iş görür
+- *Effective {cpp}*, bunu okumadan {cpp} yazıyorum diyemezsiniz gibi bişey
+- *Effective Modern {cpp}*, {cpp}11 ve 14 ile gelen pek çok yenilik, nasıl kullanmak lazım vs anlatıyor
+
+Bunlar da baya iyi kaynaklar, ama önce yukardakiler:
+
+- _{cpp} Coding Standards_
+- _More Effective {cpp}_, effective {cpp} devamı, ama güncellenmediği için biraz eski
+- _Modern {cpp} Design_, generic programming üzerine esaslı ilk kitap sayılabilir, metaprogrammingle vs ilgileniyorsanız baya faydalı
+- _{cpp} Templates: The Complete Guide_, template işleriyle yakından ve uzaktan alakalı herşeyi öğrenmek istiyorsanız kaynağınız bu
+- _The {cpp} Programming Language_, kocaman bir referans kitabı, arada bişeylere bakmak için faydalı, ama oturup {cpp} öğreneceğiniz kitap bu değil
+- _Concurrency in action_, {cpp}'da multithreading ile alakalı her şeyi öğrenebileceğiniz harika bir kaynak, ikinci versiyonu da çıktı çıkacak falan
+- _Design and evolution_, bu niye böyle, neden bu feature bu kadar kötü, {cpp}'ı neden sevmiyoruz falan gibi şeyler burda, direk dilin çıkışından başlayıp anlatıyor, baya meta bi kitap, ama arkaplan kazanmak için faydalı
+
+Şurada detaylıca, baya güzel bir liste var, oraya da bakmak lazım: https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list
+
+## Link
+
+*Move semantics ve r-value references*: http://thbecker.net/articles/rvalue_references/section_01.html
+
+## Kanallar
+
+- CppCon'daki aşağı yukarı bütün konuşmalar yüksek kalitede youtube'a geliyor: https://www.youtube.com/user/CppCon
+
+## Standart
+
+Bildiğiniz, yada şimdi öğreneceğiniz üzere, {cpp} bir komite tarafından tasarlanan bir dil, dolayısıyla Go, D, Rust vs diğer diller gibi bir referans implementation üzerinden yürümüyor, kocaman bir standardımız var ve derleyiciler bu standardı implement etmeye çalışıyor.
+
+En son standart taslağına şurdan güzel bir arayüzle ulaşabiliyorsunuz:
+
+http://eel.is/c++draft/

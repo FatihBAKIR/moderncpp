@@ -4,11 +4,12 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.6.1">
+<meta name="generator" content="Asciidoctor 1.5.7.1">
 <meta name="author" content="Fatih BAKIR">
 <title>inline</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
 </head>
 <body class="article">
 <div id="header">
@@ -42,20 +43,20 @@ anlamını değiştiriyor. Bunlardan biri de <code>inline</code> keywordu. Aşa�
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>int factorial(int k)
+<pre class="CodeRay highlight"><code data-lang="cpp"><span class="predefined-type">int</span> factorial(<span class="predefined-type">int</span> k)
 {
-    int accum = 1;
-    while (k &gt; 0)
+    <span class="predefined-type">int</span> accum = <span class="integer">1</span>;
+    <span class="keyword">while</span> (k &gt; <span class="integer">0</span>)
     {
         accum *= k--;
     }
-    return accum;
+    <span class="keyword">return</span> accum;
 }
 
-int main()
+<span class="predefined-type">int</span> main()
 {
-    std::cout &lt;&lt; factorial(6) &lt;&lt; '\n';
-}</pre>
+    std::cout &lt;&lt; factorial(<span class="integer">6</span>) &lt;&lt; <span class="char">'\n'</span>;
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">

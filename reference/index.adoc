@@ -6,6 +6,6 @@ Referans bolumu, {cpp} ve genel programlama konseptleriyle ilgili spesifik bilgi
 - <<implement.adoc#, Implementation>>
 - <<lifetime.adoc#, Object Lifetime>>
 - <<iterator_invalidation.adoc#, Iterator Invalidation>>
-- <<inlining.adoc#, Inlining>>
-- <<inline_keyword.adoc#, `inline` keyword>>
-- <<pimpl.adoc#, Pimpl>>
+//- <<inlining.adoc#, Inlining>>
+//- <<inline_keyword.adoc#, `inline` keyword>>
+//- <<pimpl.adoc#, Pimpl>>

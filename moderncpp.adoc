@@ -10,6 +10,7 @@ Bu noktadaki sikinti su: yeni ozellik ve yaklasimlar eskilere gore acikca ustun 
 
 Konuyla alakali en guzel ornek memory yonetimi olabilir. Guncel {cpp} programlarinda manuel olarak memory yonetimi yapmiyoruz. Ornegin, asagidaki kod dinamik olarak objeler olusturup bunlari kullansa da memory allocation ve deallocation yapmamamiza ragmen herhangi bir leak olusmuyor:
 
+[source]
 ----
 void foo()
 {

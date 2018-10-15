@@ -5,13 +5,15 @@ Modern {cpp}, dilin guncel ozelliklerini kullanarak verimli, anlasilir ve guvenl
 
 ---
 
-== Seriler
+== <<kaynaklar.adoc#, Kaynaklar>>
 
-=== <<posts/intro/index.adoc#, {cpp}'a Giris>>
-=== <<posts/intermediate/index.adoc#, Orta seviye {cpp}>>
+//== Seriler
+
+//=== <<posts/intro/index.adoc#, {cpp}'a Giris>>
+//=== <<posts/intermediate/index.adoc#, Orta seviye {cpp}>>
 
 == <<reference/index.adoc#, Referans>>
 
-== Bloglar
+== Blog
 
-- <<blog/fatih/inline.adoc#, `inline`>>
+- <<blog/fatih/inline.adoc#, `inline` düşündüğünüz şeyi yapmıyor>>

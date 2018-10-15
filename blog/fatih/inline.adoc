@@ -18,6 +18,7 @@ kadar hayatta tutulur. Bildiğiniz local değişkenler.
 anlamını değiştiriyor. Bunlardan biri de `inline` keywordu. Aşağıdaki
 çok standart faktöryel fonksyonuna bakalım.
 
+[source]
 ----
 int factorial(int k)
 {

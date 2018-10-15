@@ -1,13 +1,13 @@
-ADOC_FLAGS= -a nofooter -n -a linkcss
+ADOC_FLAGS= -a nofooter -n -a linkcss -a source-highlighter=coderay -a source-language=cpp -a coderay-linenums-mode=inline
 BUILD_DIR=docs
 
-all: $(BUILD) posts reference blog $(BUILD_DIR)/index.html $(BUILD_DIR)/moderncpp.html
+all: $(BUILD) $(BUILD_DIR)/index.html 
 
-$(BUILD_DIR)/index.html: index.adoc
-	asciidoctor index.adoc $(ADOC_FLAGS) -o ./$(BUILD_DIR)/index.html 
+$(BUILD_DIR)/index.html: index.adoc $(BUILD_DIR)/moderncpp.html $(BUILD_DIR)/kaynaklar.html posts blog reference
+	asciidoctor $< $(ADOC_FLAGS) -o $@ 
 
-$(BUILD_DIR)/moderncpp.html: moderncpp.adoc
-	asciidoctor moderncpp.adoc $(ADOC_FLAGS) -o ./$(BUILD_DIR)/moderncpp.html 
+$(BUILD_DIR)/%.html: %.adoc
+	asciidoctor $< $(ADOC_FLAGS) -o $@ 
 
 posts:
 	$(MAKE) -C posts BUILD=../$(BUILD_DIR)/posts ADOC_FLAGS="$(ADOC_FLAGS)"
