@@ -1,0 +1,8 @@
+= `iostream` neden böyle?
+Fatih BAKIR <bakir@ucsb.edu>
+
+Yada, kısaca:
+[source]
+----
+std::cout << "bunu " << neden << " boyle " << "yapiyoruz?" << '\n';
+----

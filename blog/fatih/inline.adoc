@@ -105,7 +105,6 @@ Son bir ufak not olarak, inline fonksyonlar kullandığınızda [One Definition 
 
 İyi kodlamalar
 
-[source]
 ---
 
 _Not:_ eğer ki ikna olmadıysanız, yada birini ikna edemiyorsanız, ilk örneğin [assembly çıktısına](https://godbolt.org/g/ng2YVn) bakarak ispatlayabilirsiniz. Optimizasyonları açtıktan sonra, inline işaretini kaldırsanız da fonksyonun inline'lanacağını görebilirsiniz.

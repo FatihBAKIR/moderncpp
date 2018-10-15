@@ -1,0 +1,3 @@
+= Kuvvetli tipler
+Fatih BAKIR <bakir@ucsb.edu>
+
