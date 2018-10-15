@@ -5,6 +5,7 @@ Iterator gecersizleme, omru bitmemis bir iterator'un gosterdigi nesnenin omrunun
 
 Pointer'lar icin de ayni durum gecerli olmakla _dangling pointer_ belki de daha sik kullanilan bir terimdir.
 
+[source]
 ----
 void foo()
 {
@@ -16,6 +17,7 @@ void foo()
 
 Bu noktada onemli bir mevzu, {cpp}'da iterator ve pointerlarin gosterdigi nesneyi _takip etmiyor_ olusudur. Ustteki ornekte gecersizleme asikarken, daha gizli yollardan bu problemle karsilasabiliriz. Mesela `std::vector` gibi bitisik container tiplerinde eger alan onden `reserve` edilmemisse yeni bir eleman eklemek butun iteratorleri gecersizler:
 
+[source]
 ----
 void foo()
 {

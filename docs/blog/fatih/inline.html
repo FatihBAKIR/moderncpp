@@ -97,13 +97,13 @@ anlamını değiştiriyor. Bunlardan biri de <code>inline</code> keywordu. Aşa�
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// a.cpp
-int square(int a)
-{ return a * a; }
+<pre class="CodeRay highlight"><code data-lang="cpp"><span class="comment">// a.cpp</span>
+<span class="predefined-type">int</span> square(<span class="predefined-type">int</span> a)
+{ <span class="keyword">return</span> a * a; }
 
-// b.cpp
-int square(int a)
-{ return a * a; }</pre>
+<span class="comment">// b.cpp</span>
+<span class="predefined-type">int</span> square(<span class="predefined-type">int</span> a)
+{ <span class="keyword">return</span> a * a; }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -114,15 +114,15 @@ int square(int a)
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// a.h
-int square(int a)
-{ return a * a; }
+<pre class="CodeRay highlight"><code data-lang="cpp"><span class="comment">// a.h</span>
+<span class="predefined-type">int</span> square(<span class="predefined-type">int</span> a)
+{ <span class="keyword">return</span> a * a; }
 
-// a.cpp
-#include &lt;a.h&gt;
+<span class="comment">// a.cpp</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;a.h&gt;</span>
 
-// b.cpp
-#include &lt;a.h&gt;</pre>
+<span class="comment">// b.cpp</span>
+<span class="preprocessor">#include</span> <span class="include">&lt;a.h&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -130,13 +130,13 @@ int square(int a)
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>// MyClass.h
-struct MyClass
+<pre class="CodeRay highlight"><code data-lang="cpp"><span class="comment">// MyClass.h</span>
+<span class="keyword">struct</span> MyClass
 {
-  void fun() { ... }
-  // iki tanım da eş
-  inline void fun() { ... }
-};</pre>
+  <span class="directive">void</span> fun() { ... }
+  <span class="comment">// iki tanım da eş</span>
+  <span class="directive">inline</span> <span class="directive">void</span> fun() { ... }
+};</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -148,7 +148,11 @@ struct MyClass
 <div class="paragraph">
 <p>İyi kodlamalar</p>
 </div>
-<hr>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cpp">---</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p><em>Not:</em> eğer ki ikna olmadıysanız, yada birini ikna edemiyorsanız, ilk örneğin [assembly çıktısına](<a href="https://godbolt.org/g/ng2YVn" class="bare">https://godbolt.org/g/ng2YVn</a>) bakarak ispatlayabilirsiniz. Optimizasyonları açtıktan sonra, inline işaretini kaldırsanız da fonksyonun inline&#8217;lanacağını görebilirsiniz.</p>
 </div>

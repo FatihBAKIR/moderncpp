@@ -14,6 +14,8 @@ Lifetime, yada object lifetime, {cpp}'da bir nesnenin gecerli oldugu araliga den
 == Static storage
 
 Her bir storage sinifinin farkli yasam sureleri vardir, ornegin _static storage_'a sahip bir nesnenin yasam suresi construct edildikten program bitene kadardir:
+
+[source]
 ----
 std::string hello = "merhaba dunya!";
 
@@ -27,6 +29,7 @@ Yukaridaki _global_ `hello` objesinin constructor'u main fonksyonundan once cagi
 
 Static storage'a sahip nesneler global nesneler veya fonksyonlara ait _static_ nesnelerdir:
 
+[source]
 ----
 int global_object = 5;
 
@@ -39,6 +42,7 @@ int foo()
 
 Ustteki ornekteki `value` ve `global_object` nesnelerinin ikisi de _static_ storage'a sahiptir. Aralarindaki fark ise ne noktada _initialize_ edildikleridir. Global nesneler main fonksyonu cagirilmadan once construct ediliyorken, fonksyon static nesneler o fonksyon ilk cagirildiginda construct edilir ve dolayisiyla o fonksyon hic cagirilmazsa, constructor ve dolayisiyla destructor'lari da asla cagirilmaz:
 
+[source]
 ----
 int main(int argc, char** argv)
 {
@@ -54,6 +58,7 @@ Onemli bir nokta, global degiskenlerin olusturulma ve yok edilme siralariyla ilg
 
 == Thread local storage
 
+[source]
 ----
 thread_local std::string val = "her thread icin farkli!";
 
@@ -79,6 +84,7 @@ Thread local storage'a sahip butun nesneler, o nesnelere ait thread'in giris fon
 
 Automatic storage, fonksyonlarin icindeki lokal degiskenlerin sahip oldugu storage tipidir. Bu nesnelerin yasamlari cevrelerindeki scope'la baslar, ve scope kapandiginda biter:
 
+[source]
 ----
 void foo()
 {
@@ -96,6 +102,7 @@ Yukaridaki ornekte `foo` fonksyonun butun govdesinde hayatta iken, `vs` her dong
 
 Genel olarak _stack variable_ olarak adlandirilsalar da {cpp} bu degiskenlerin tam olarak nasil tutulacagi ile ilgili bir garanti vermez. Garantili olan, nesnelerin akis sirasinda yukaridan asagi olusturulup, cikista olusturulma sirasina ters yok edilecegidir:
 
+[source]
 ----
 void foo()
 {

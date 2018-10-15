@@ -28,12 +28,12 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>void foo()
+<pre class="CodeRay highlight"><code data-lang="cpp"><span class="directive">void</span> foo()
 {
-	auto x = new int;
-	delete x;
-	// x bu noktada gecersiz
-}</pre>
+        <span class="directive">auto</span> x = <span class="keyword">new</span> <span class="predefined-type">int</span>;
+        <span class="keyword">delete</span> x;
+        <span class="comment">// x bu noktada gecersiz</span>
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -41,14 +41,14 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>void foo()
+<pre class="CodeRay highlight"><code data-lang="cpp"><span class="directive">void</span> foo()
 {
-	std::vector x{1, 2, 3}; // C++17 template type deduction
+        std::vector x{<span class="integer">1</span>, <span class="integer">2</span>, <span class="integer">3</span>}; <span class="comment">// C++17 template type deduction</span>
 
-	auto first = x.begin();
-	x.push_back(4);
-	// first bu noktada dangle etmekte
-}</pre>
+        <span class="directive">auto</span> first = x.begin();
+        x.push_back(<span class="integer">4</span>);
+        <span class="comment">// first bu noktada dangle etmekte</span>
+}</code></pre>
 </div>
 </div>
 </div>

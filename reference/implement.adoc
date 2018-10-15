@@ -12,6 +12,7 @@ f(x) = 2x + 5
 
 Yukardaki fonksyonun {cpp}'daki _implementation_'i asagidaki gibidir:
 
+[source]
 ----
 int f(int x) 
 {

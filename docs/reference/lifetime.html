@@ -63,12 +63,12 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>std::string hello = "merhaba dunya!";
+<pre class="CodeRay highlight"><code data-lang="cpp">std::<span class="predefined-type">string</span> hello = <span class="string"><span class="delimiter">&quot;</span><span class="content">merhaba dunya!</span><span class="delimiter">&quot;</span></span>;
 
-int main()
+<span class="predefined-type">int</span> main()
 {
-	std::cout &lt;&lt; hello &lt;&lt; '\n';
-}</pre>
+        std::cout &lt;&lt; hello &lt;&lt; <span class="char">'\n'</span>;
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -79,13 +79,13 @@ int main()
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>int global_object = 5;
+<pre class="CodeRay highlight"><code data-lang="cpp"><span class="predefined-type">int</span> global_object = <span class="integer">5</span>;
 
-int foo()
+<span class="predefined-type">int</span> foo()
 {
-	static int value = 42;
-	return value;
-}</pre>
+        <span class="directive">static</span> <span class="predefined-type">int</span> value = <span class="integer">42</span>;
+        <span class="keyword">return</span> value;
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -93,10 +93,10 @@ int foo()
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>int main(int argc, char** argv)
+<pre class="CodeRay highlight"><code data-lang="cpp"><span class="predefined-type">int</span> main(<span class="predefined-type">int</span> argc, <span class="predefined-type">char</span>** argv)
 {
-    if (argc &gt; 1) foo();
-}</pre>
+    <span class="keyword">if</span> (argc &gt; <span class="integer">1</span>) foo();
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -115,13 +115,13 @@ int foo()
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre>thread_local std::string val = "her thread icin farkli!";
+<pre class="CodeRay highlight"><code data-lang="cpp"><span class="directive">thread_local</span> std::<span class="predefined-type">string</span> val = <span class="string"><span class="delimiter">&quot;</span><span class="content">her thread icin farkli!</span><span class="delimiter">&quot;</span></span>;
 
-void foo()
+<span class="directive">void</span> foo()
 {
-	thread_local std::string func_thread_local = "her thread icin yine farkli";
-	//...
-}</pre>
+        <span class="directive">thread_local</span> std::<span class="predefined-type">string</span> func_thread_local = <span class="string"><span class="delimiter">&quot;</span><span class="content">her thread icin yine farkli</span><span class="delimiter">&quot;</span></span>;
+        <span class="comment">//...</span>
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -149,16 +149,16 @@ void foo()
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>void foo()
+<pre class="CodeRay highlight"><code data-lang="cpp"><span class="directive">void</span> foo()
 {
-	std::string foo; // foo'nun omru baslar
+        std::<span class="predefined-type">string</span> foo; <span class="comment">// foo'nun omru baslar</span>
 
-	for (int i = 0; i &lt; 5; ++i)
-	{
-		std::vector&lt;int&gt; vs; // vs'in omru baslar
-		// vs'i kullan
-	} // &lt;- vs'in omru biter
-} // foo'nun omru biter</pre>
+        <span class="keyword">for</span> (<span class="predefined-type">int</span> i = <span class="integer">0</span>; i &lt; <span class="integer">5</span>; ++i)
+        {
+                std::vector&lt;<span class="predefined-type">int</span>&gt; vs; <span class="comment">// vs'in omru baslar</span>
+                <span class="comment">// vs'i kullan</span>
+        } <span class="comment">// &lt;- vs'in omru biter</span>
+} <span class="comment">// foo'nun omru biter</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -169,14 +169,14 @@ void foo()
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>void foo()
+<pre class="CodeRay highlight"><code data-lang="cpp"><span class="directive">void</span> foo()
 {
-	std::string x;
-	std::vector&lt;int&gt; ints;
+        std::<span class="predefined-type">string</span> x;
+        std::vector&lt;<span class="predefined-type">int</span>&gt; ints;
 
-	ints.push_back(5);
-	float y = 3.5f;
-}</pre>
+        ints.push_back(<span class="integer">5</span>);
+        <span class="predefined-type">float</span> y = <span class="float">3</span><span class="float">.5f</span>;
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
