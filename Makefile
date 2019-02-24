@@ -21,4 +21,7 @@ $(BUILD):
 clean:
 	rm -rf $(BUILD)
 
+serve:
+	cd docs; python2 -m SimpleHTTPServer 8080
+
 .PHONY: $(SUBDIRS)
