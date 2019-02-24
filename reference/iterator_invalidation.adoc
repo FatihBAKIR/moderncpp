@@ -21,10 +21,24 @@ Bu noktada onemli bir mevzu, {cpp}'da iterator ve pointerlarin gosterdigi nesney
 ----
 void foo()
 {
-	std::vector x{1, 2, 3}; // C++17 template type deduction
+	std::vector v{3, 5, 7, 9}; // C++17 template type deduction
 
-	auto first = x.begin();
-	x.push_back(4);
-	// first bu noktada dangle etmekte
+	auto it = v.begin() + 1;
 }
 ----
+
+Bu koda gore, asagidakine benzer bir memory durumuna sahipiz:
+
+image::iterator_invalid1.png[State, width="80%", align="center"]
+
+Fakat vector'ümüze aşağıdaki gibi bir eleman daha eklersek, olan bütün elemanlar vector büyüdükten sonraki yere 
+taşınacak ve vector'ün orijinal yeri deallocate edilecek. Bu durumda, `it` hala vector'un eski elemanlarından birininin
+bulunduğu yeri gösterdiği için, kendisine _sarkıyor_ yani _danglind_ diyoruz:
+
+[source]
+----
+	v.push_back(11);
+	// it bu noktada dangle etmekte
+----
+
+image::iterator_invalid2.png[State, width="80%", align="center"]

@@ -1,4 +1,4 @@
-ADOC_FLAGS= -a nofooter -n -a linkcss -a source-highlighter=coderay -a source-language=cpp -a coderay-linenums-mode=inline
+ADOC_FLAGS= -a imagesdir=/assets/images -a nofooter -n -a linkcss -a source-highlighter=coderay -a source-language=cpp -a coderay-linenums-mode=inline
 BUILD=docs
 
 SUBDIRS= posts blog reference
@@ -13,7 +13,10 @@ $(BUILD)/%.html: %.adoc
 $(BUILD)/%: %
 	$(MAKE) -C $< BUILD=../$@ ADOC_FLAGS="$(ADOC_FLAGS)"
 
-all: $(BUILD) $(OBJ) $(SUBDIR_OBJS)
+all: $(BUILD) $(OBJ) $(SUBDIR_OBJS) $(BUILD)/assets
+
+$(BUILD)/assets: assets
+	cp -r assets $(BUILD)
 
 $(BUILD): 
 	mkdir -p $(BUILD)
