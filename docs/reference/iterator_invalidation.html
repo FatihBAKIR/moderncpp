@@ -43,12 +43,34 @@
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="cpp"><span class="directive">void</span> foo()
 {
-        std::vector x{<span class="integer">1</span>, <span class="integer">2</span>, <span class="integer">3</span>}; <span class="comment">// C++17 template type deduction</span>
+        std::vector v{<span class="integer">3</span>, <span class="integer">5</span>, <span class="integer">7</span>, <span class="integer">9</span>}; <span class="comment">// C++17 template type deduction</span>
 
-        <span class="directive">auto</span> first = x.begin();
-        x.push_back(<span class="integer">4</span>);
-        <span class="comment">// first bu noktada dangle etmekte</span>
+        <span class="directive">auto</span> it = v.begin() + <span class="integer">1</span>;
 }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Bu koda gore, asagidakine benzer bir memory durumuna sahipiz:</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="/assets/images/iterator_invalid1.png" alt="State" width="80%">
+</div>
+</div>
+<div class="paragraph">
+<p>Fakat vector&#8217;ümüze aşağıdaki gibi bir eleman daha eklersek, olan bütün elemanlar vector büyüdükten sonraki yere
+taşınacak ve vector&#8217;ün orijinal yeri deallocate edilecek. Bu durumda, <code>it</code> hala vector&#8217;un eski elemanlarından birininin
+bulunduğu yeri gösterdiği için, kendisine <em>sarkıyor</em> yani <em>danglind</em> diyoruz:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cpp">        v.push_back(<span class="integer">11</span>);
+        <span class="comment">// it bu noktada dangle etmekte</span></code></pre>
+</div>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="/assets/images/iterator_invalid2.png" alt="State" width="80%">
 </div>
 </div>
 </div>
