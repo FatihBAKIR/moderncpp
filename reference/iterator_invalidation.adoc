@@ -3,7 +3,7 @@ Fatih BAKIR <bakir@ucsb.edu>
 
 Iterator gecersizleme, omru bitmemis bir iterator'un gosterdigi nesnenin omrunun bitmesine denir. Gecersizlenmis iteratorlere _dangling_ iterator de denir.
 
-Pointer'lar icin de ayni durum gecerli olmakla _dangling pointer_ belki de daha sik kullanilan bir terimdir.
+C++'da genellikle pointerlar da birer iterator olarak kabul edilir ve ayni problem pointerlar icin de mevcuttur. Gosterdigi yer gecersiz olan pointerlara _dangling pointer_ denir.
 
 [source]
 ----
@@ -33,7 +33,7 @@ image::iterator_invalid1.png[State, width="80%", align="center"]
 
 Fakat vector'ümüze aşağıdaki gibi bir eleman daha eklersek, olan bütün elemanlar vector büyüdükten sonraki yere 
 taşınacak ve vector'ün orijinal yeri deallocate edilecek. Bu durumda, `it` hala vector'un eski elemanlarından birininin
-bulunduğu yeri gösterdiği için, kendisine _sarkıyor_ yani _danglind_ diyoruz:
+bulunduğu yeri gösterdiği için, kendisine _sarkıyor_ yani _dangling_ diyoruz:
 
 [source]
 ----
@@ -42,3 +42,48 @@ bulunduğu yeri gösterdiği için, kendisine _sarkıyor_ yani _danglind_ diyoru
 ----
 
 image::iterator_invalid2.png[State, width="80%", align="center"]
+
+## Iterator stability
+
+Iteratorlerin bu sekilde dangling hale geliyor olmasi pek cok program icin onemli bir sorun teskil eder. Ozellikle uzun sureli calisan ve _mutable_ container'lar kullanan programlarda onemli bug'lara sebep olabilir. Bu noktada ya container'larin iterator'lerini dogrudan kullanmak yerine index gibi bir _indirection_ daha kullaniriz, yada _iterator stable_ veri yapilarini tercih ederiz.
+
+`std::vector`'lerin iteratorleri stabil degildir. Bunun anlami, bir vector'e eleman eklediginizde yada cikardiginizda, potansiyel olarak o vector'e ait butun iteratorler gecersizlenir. Bunun sebebi, yukarida bahsettigimiz gibi, vector'un elemanlarinin, O(1) ulasim saglayabilmek icin memory'de bitisik bulunma zorunlulugu olmasidir.
+
+Asagidaki standart container'larin iteratorleri stabil degildir:
+
+. `std::vector`
+
+Butun veri yapilari elemanlarini bitisik olarak bulundurmayabilir. Ornegin `std::list` bir doubly linked list olarak implement edilir ve her elemani ayri ayri allocate edilir. Bu sayede, bir listeye yeni eleman eklendiginde yada olan bir eleman cikarildiginda o listenin iteratorleri gecerliligini korur.
+
+Asagidaki standart container'lar ise stabil iteratorlere sahiplerdir:
+
+. `std::map`
+. `std::set`
+. `std::unordered_map`
+. `std::unordered_set`
+. `std::multimap`
+. `std::multiset`
+. `std::unordered_multimap`
+. `std::unordered_multiset`
+. `std::deque`
+. `std::list`
+. `std::forward_list`
+. `std::array`
+
+Gorulecegi uzere, standart kutuphanede stabil olmayan iteratorlere sahip tek container tipi `std::vector`dur. Bu sebepden dolayi, mutable vector'ler kullanirken iteratorlerin gecerlilik durumuna ekstra ozen gosterilmeli, tercihen dogrudan indexler uzerinden operasyon yapilmalidir.
+
+`vector`'lerle ilgili bu soruna ait birkac cozum soz konusu. Birincisi, eger bir vector'de toplam kac eleman olacagi onden biliniyorsa, `vector::reserve` fonksyonuyla butun memory tek seferde alinip, vector'un buyume operasyonunun calismasinin onune gecilebilir:
+
+[source]
+----
+std::vector<int> v;
+v.reserve(1000);
+
+for (auto& x : some_range) // some_range en fazla 1000 elemana sahip
+{
+    v.push_back(x);
+    store_iterator(v.end() - 1);
+}
+----
+
+Bu noktada, surekli vector'e yeni eleman ekleyip, bu elemana bir iterator'u bir yerlere koyuyor olsak da, butun memory onden `reserve` edildigi icin bu iteratorler asla gecersizlenmeyecek.
