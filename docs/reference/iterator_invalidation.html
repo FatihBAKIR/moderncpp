@@ -20,11 +20,13 @@
 </div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>Iterator gecersizleme, omru bitmemis bir iterator&#8217;un gosterdigi nesnenin omrunun bitmesine denir. Gecersizlenmis iteratorlere <em>dangling</em> iterator de denir.</p>
 </div>
 <div class="paragraph">
-<p>Pointer&#8217;lar icin de ayni durum gecerli olmakla <em>dangling pointer</em> belki de daha sik kullanilan bir terimdir.</p>
+<p>C++'da genellikle pointerlar da birer iterator olarak kabul edilir ve ayni problem pointerlar icin de mevcuttur. Gosterdigi yer gecersiz olan pointerlara <em>dangling pointer</em> denir.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -60,7 +62,7 @@
 <div class="paragraph">
 <p>Fakat vector&#8217;ümüze aşağıdaki gibi bir eleman daha eklersek, olan bütün elemanlar vector büyüdükten sonraki yere
 taşınacak ve vector&#8217;ün orijinal yeri deallocate edilecek. Bu durumda, <code>it</code> hala vector&#8217;un eski elemanlarından birininin
-bulunduğu yeri gösterdiği için, kendisine <em>sarkıyor</em> yani <em>danglind</em> diyoruz:</p>
+bulunduğu yeri gösterdiği için, kendisine <em>sarkıyor</em> yani <em>dangling</em> diyoruz:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -71,6 +73,96 @@ bulunduğu yeri gösterdiği için, kendisine <em>sarkıyor</em> yani <em>dangli
 <div class="imageblock" style="text-align: center">
 <div class="content">
 <img src="/assets/images/iterator_invalid2.png" alt="State" width="80%">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_iterator_stability">1. Iterator stability</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Iteratorlerin bu sekilde dangling hale geliyor olmasi pek cok program icin onemli bir sorun teskil eder. Ozellikle uzun sureli calisan ve <em>mutable</em> container&#8217;lar kullanan programlarda onemli bug&#8217;lara sebep olabilir. Bu noktada ya container&#8217;larin iterator&#8217;lerini dogrudan kullanmak yerine index gibi bir <em>indirection</em> daha kullaniriz, yada <em>iterator stable</em> veri yapilarini tercih ederiz.</p>
+</div>
+<div class="paragraph">
+<p>`std::vector&#8217;lerin iteratorleri stabil degildir. Bunun anlami, bir vector&#8217;e eleman eklediginizde yada cikardiginizda, potansiyel olarak o vector&#8217;e ait butun iteratorler gecersizlenir. Bunun sebebi, yukarida bahsettigimiz gibi, vector&#8217;un elemanlarinin, O(1) ulasim saglayabilmek icin memory&#8217;de bitisik bulunma zorunlulugu olmasidir.</p>
+</div>
+<div class="paragraph">
+<p>Asagidaki standart container&#8217;larin iteratorleri stabil degildir:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>std::vector</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Butun veri yapilari elemanlarini bitisik olarak bulundurmayabilir. Ornegin <code>std::list</code> bir doubly linked list olarak implement edilir ve her elemani ayri ayri allocate edilir. Bu sayede, bir listeye yeni eleman eklendiginde yada olan bir eleman cikarildiginda o listenin iteratorleri gecerliligini korur.</p>
+</div>
+<div class="paragraph">
+<p>Asagidaki standart container&#8217;lar ise stabil iteratorlere sahiplerdir:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>std::map</code></p>
+</li>
+<li>
+<p><code>std::set</code></p>
+</li>
+<li>
+<p><code>std::unordered_map</code></p>
+</li>
+<li>
+<p><code>std::unordered_set</code></p>
+</li>
+<li>
+<p><code>std::multimap</code></p>
+</li>
+<li>
+<p><code>std::multiset</code></p>
+</li>
+<li>
+<p><code>std::unordered_multimap</code></p>
+</li>
+<li>
+<p><code>std::unordered_multiset</code></p>
+</li>
+<li>
+<p><code>std::deque</code></p>
+</li>
+<li>
+<p><code>std::list</code></p>
+</li>
+<li>
+<p><code>std::forward_list</code></p>
+</li>
+<li>
+<p><code>std::array</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Gorulecegi uzere, standart kutuphanede stabil olmayan iteratorlere sahip tek container tipi `std::vector`dur. Bu sebepden dolayi, mutable vector&#8217;ler kullanirken iteratorlerin gecerlilik durumuna ekstra ozen gosterilmeli, tercihen dogrudan indexler uzerinden operasyon yapilmalidir.</p>
+</div>
+<div class="paragraph">
+<p><code>vector&#8217;lerle ilgili bu soruna ait birkac cozum soz konusu. Birincisi, eger bir vector&#8217;de toplam kac eleman olacagi onden biliniyorsa, `vector::reserve</code> fonksyonuyla butun memory tek seferde alinip, vector&#8217;un buyume operasyonunun calismasinin onune gecilebilir:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cpp">std::vector&lt;<span class="predefined-type">int</span>&gt; v;
+v.reserve(<span class="integer">1000</span>);
+
+<span class="keyword">for</span> (<span class="directive">auto</span>&amp; x : some_range) <span class="comment">// some_range en fazla 1000 elemana sahip</span>
+{
+    v.push_back(x);
+    store_iterator(v.end() - <span class="integer">1</span>);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Bu noktada, surekli vector&#8217;e yeni eleman ekleyip, bu elemana bir iterator&#8217;u bir yerlere koyuyor olsak da, butun memory onden <code>reserve</code> edildigi icin bu iteratorler asla gecersizlenmeyecek.</p>
+</div>
 </div>
 </div>
 </div>
